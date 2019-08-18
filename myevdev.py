@@ -27,12 +27,12 @@ KEY_MAP = {
   ecodes.KEY_RIGHTSHIFT: {
     ecodes.KEY_E: [ecodes.KEY_LEFTSHIFT, ecodes.KEY_UP],
     ecodes.KEY_D: [ecodes.KEY_LEFTSHIFT, ecodes.KEY_DOWN],
-    ecodes.KEY_E: [ecodes.KEY_LEFTSHIFT, ecodes.KEY_LEFT],
+    ecodes.KEY_S: [ecodes.KEY_LEFTSHIFT, ecodes.KEY_LEFT],
     ecodes.KEY_F: [ecodes.KEY_LEFTSHIFT, ecodes.KEY_RIGHT],
     ecodes.KEY_W: [ecodes.KEY_LEFTCTRL, ecodes.KEY_LEFTSHIFT, ecodes.KEY_LEFT],
     ecodes.KEY_R: [ecodes.KEY_LEFTCTRL, ecodes.KEY_LEFTSHIFT, ecodes.KEY_RIGHT],
-    ecodes.KEY_A: [ecodes.KEY_LEFTCTRL, ecodes.KEY_LEFTSHIFT, ecodes.KEY_HOME],
-    ecodes.KEY_G: [ecodes.KEY_LEFTCTRL, ecodes.KEY_LEFTSHIFT, ecodes.KEY_END]
+    ecodes.KEY_A: [ecodes.KEY_LEFTSHIFT, ecodes.KEY_HOME],
+    ecodes.KEY_G: [ecodes.KEY_LEFTSHIFT, ecodes.KEY_END]
   }
 }
 
@@ -88,12 +88,12 @@ class State():
         self.nextState = nextState
         self.action = action
 
-def inject_mod_up(keycode):
+def inject_mod_up(keycode, keystate):
     global currentMod
     __inject(keycode, UP)
     currentMod = ''
 
-def inject_mod_down(keycode):
+def inject_mod_down(keycode, keystate):
     __inject(keycode, DOWN)
 
 def matchMod(keycode):
@@ -109,10 +109,10 @@ def judge_mod_down(keycode, keystate):
 def judge_mod_up(keycode, keystate):
     return matchMod(keycode) and keystate == UP
 
-def judge_else():
+def judge_else(keycode, keystate):
     return True
 
-def judge_key(keycode):
+def judge_key(keycode, keystate):
     global currentMod
     mod = KEY_MAP.get(currentMod)
     return mod and (keycode in mod.keys())
@@ -165,7 +165,7 @@ def handle (ks):
 
     ks.reset()
 
-dev = evdev.InputDevice('/dev/input/by-path/platform-i8042-serio-0-event-kbd')
+dev = evdev.InputDevice('/dev/input/event3')
 ui = evdev.UInput()
 
 def main():
