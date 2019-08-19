@@ -137,7 +137,7 @@ STATE_MAP = {
         State(judge_else, INJECT, [inject_mod_down, inject])
     ],
     INJECT: [
-        State(judge_key, MAPPED, [judge_mod_up, mapped]),
+        State(judge_key, MAPPED, [inject_mod_up, mapped]),
         State(judge_mod_up, NORMAL, [inject_mod_up]),
         State(judge_else, INJECT, [inject])
     ],
