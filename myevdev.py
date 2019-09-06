@@ -90,11 +90,12 @@ class State():
 
 def inject_mod_up(keycode, keystate):
     global currentMod
-    __inject(keycode, UP)
+    __inject(currentMod, UP)
     currentMod = ''
 
 def inject_mod_down(keycode, keystate):
-    __inject(keycode, DOWN)
+    global currentMod
+    __inject(currentMod, DOWN)
 
 def matchMod(keycode):
     global currentMod
